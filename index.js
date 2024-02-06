@@ -1,4 +1,13 @@
-const http = require('http')
+const express = require('express')
+const app = express()
+
+app.use(express.json())
+
+const dateTimeObject = new Date();
+console.log("A date-time object is created")
+
+console.log(`Date: ${dateTimeObject.toDateString()}`);
+console.log(`Time: ${dateTimeObject.toTimeString()}`);
 
 let persons = [
     { 
@@ -22,11 +31,20 @@ let persons = [
     "id": 4
     }
 ]
-const app = http.createServer((request, response) => {
-    response.writeHead(200, { 'Content-Type': 'application/json' })
-    response.end(JSON.stringify(persons))
+
+app.get('/', (req, res) => {
+    res.send('<h1>Hello World!</h1>')
+  })
+  
+
+app.get('/api/persons', (req, res) => {
+    res.json(persons)
   })
 
-const PORT = 3001
+app.get('/info', (req, res) => {
+    res.send('<p>Phonebook has info on '+persons.length+' people</p><p>'+dateTimeObject.toDateString()+' '+dateTimeObject.toTimeString()+'</p>')
+    })
+
+const PORT = 3001   
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
