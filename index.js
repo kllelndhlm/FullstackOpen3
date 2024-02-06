@@ -4,10 +4,6 @@ const app = express()
 app.use(express.json())
 
 const dateTimeObject = new Date();
-console.log("A date-time object is created")
-
-console.log(`Date: ${dateTimeObject.toDateString()}`);
-console.log(`Time: ${dateTimeObject.toTimeString()}`);
 
 let persons = [
     { 
