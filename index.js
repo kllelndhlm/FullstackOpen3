@@ -1,7 +1,9 @@
-const express = require('express')
+const express = require('express');
+const morgan = require('morgan');
 const app = express()
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 const dateTimeObject = new Date();
 
@@ -60,9 +62,6 @@ app.get('/info', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
-  //Tee uuden numeron lisäykseen virheiden käsittely. Pyyntö ei saa onnistua, jos
-  //nimi tai numero puuttuu
-  //lisättävä nimi on jo luettelossa
 
   const body = req.body
   const firstNames = persons.map(person => person.name)
@@ -92,6 +91,9 @@ app.post('/api/persons', (req, res) => {
   }
 
   persons = persons.concat(person)
+
+  morgan.token('type', function (req, res) { return req.headers['content-type'] })
+
 
   res.json(persons)
 })
