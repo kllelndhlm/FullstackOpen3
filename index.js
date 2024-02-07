@@ -57,7 +57,44 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.get('/info', (req, res) => {
     res.send('<p>Phonebook has info on '+persons.length+' people</p><p>'+dateTimeObject.toDateString()+' '+dateTimeObject.toTimeString()+'</p>')
+})
+
+app.post('/api/persons', (req, res) => {
+  //Tee uuden numeron lisäykseen virheiden käsittely. Pyyntö ei saa onnistua, jos
+  //nimi tai numero puuttuu
+  //lisättävä nimi on jo luettelossa
+
+  const body = req.body
+  const firstNames = persons.map(person => person.name)
+
+  if (!body.name) {
+    return res.status(400).json({ 
+      error: 'name missing' 
     })
+  }
+
+  if (!body.number) {
+    return res.status(400).json({ 
+      error: 'number missing' 
+    })
+  }
+
+  if (firstNames.includes(body.name)) {
+    return res.status(409).json({ 
+      error: 'name must be unique'
+    })
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: Math.random(10000),
+  }
+
+  persons = persons.concat(person)
+
+  res.json(persons)
+})
 
 const PORT = 3001   
 app.listen(PORT)
