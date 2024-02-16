@@ -1,6 +1,6 @@
 const express = require('express');
-const morgan = require('morgan');
 const app = express()
+const morgan = require('morgan');
 const cors = require('cors')
 
 app.use(cors())
@@ -39,7 +39,7 @@ let persons = [
     "id": 3
     },
     { 
-    "name": "Mary Poppendieck", 
+    "name": "Mary Popperndieck", 
     "number": "39-23-6423122",
     "id": 4
     }
