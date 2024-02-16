@@ -105,7 +105,6 @@ app.post('/api/persons', (req, res) => {
     id: Math.random(10000),
   }
 
-  
   persons = persons.concat(person)
 
   morgan.token('type', function (req, res) { return req.headers['content-type'] })
