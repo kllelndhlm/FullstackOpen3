@@ -1,16 +1,21 @@
-require('dotenv').config()
 const express = require('express');
 const app = express()
-const morgan = require('morgan');
-const cors = require('cors')
+require('dotenv').config()
+//const morgan = require('morgan');
 const Person = require('./models/person')
+
+let persons = [
+]
+
+app.use(express.static('dist'))
+
+const cors = require('cors')
 
 app.use(cors())
 
 app.use(express.json())
 
-app.use(express.static('dist'))
-
+/*
 morgan.token('postData', (req) => {
   if (req.method === 'POST') return ' ' + JSON.stringify(req.body);
   else return ' ';
@@ -21,9 +26,11 @@ app.use(
     ':method :url :status :res[content-length] - :response-time ms :postData'
   )
 );
+*/
 
 const dateTimeObject = new Date();
 
+/*
 let persons = [
     { 
     "name": "Arto Hellas", 
@@ -46,6 +53,7 @@ let persons = [
     "id": 4
     }
 ]
+*/
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
@@ -53,8 +61,10 @@ app.get('/', (req, res) => {
   
 
 app.get('/api/persons', (req, res) => {
+  Person.find({}).then(persons => {
     res.json(persons)
   })
+})
 
 app.get('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id)
