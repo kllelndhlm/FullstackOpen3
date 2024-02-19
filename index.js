@@ -3,7 +3,7 @@ const express = require('express');
 const app = express()
 const morgan = require('morgan');
 const cors = require('cors')
-const Number = require('./models/person')
+const Person = require('./models/person')
 
 app.use(cors())
 
@@ -68,10 +68,9 @@ app.get('/api/persons/:id', (req, res) => {
 })
   
 app.delete('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
-  persons = persons.filter(person => person.id !== id)
-
-  res.status(204).end()
+  Person.findById(req.params.id).then(person => {
+    res.json(person)
+  })
 })
 
 app.get('/info', (req, res) => {
@@ -101,18 +100,17 @@ app.post('/api/persons', (req, res) => {
     })
   }
 
-  const person = {
+  const person = new Person ({
     name: body.name,
     number: body.number,
     id: Math.random(10000),
-  }
+  })
 
-  persons = persons.concat(person)
+/*  persons = persons.concat(person)*/
 
-  morgan.token('type', function (req, res) { return req.headers['content-type'] })
-
-
-  res.json(persons)
+  person.save().then(savedPerson => {
+    res.json(savedPerson)
+  })
 })
 
 const PORT = process.env.PORT
