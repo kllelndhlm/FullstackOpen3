@@ -115,8 +115,7 @@ app.post('/api/persons', (req, res) => {
 
   const person = new Person ({
     name: body.name,
-    number: body.number,
-    id: Math.random(10000),
+    number: body.number
   })
 
   persons = persons.concat(person)
