@@ -14,6 +14,7 @@ const cors = require('cors')
 app.use(cors())
 
 app.use(express.json())
+console.log("Here!")
 
 /*
 morgan.token('postData', (req) => {
@@ -75,9 +76,12 @@ app.get('/api/persons/:id', (req, res) => {
     res.status(404).end()
   }
 })
+console.log("Here!2")
+
   
 app.delete('/api/persons/:id', (req, res) => {
   Person.findById(req.params.id).then(person => {
+    console.log(req.params.id)
     res.json(person)
   })
 })
@@ -115,7 +119,7 @@ app.post('/api/persons', (req, res) => {
     id: Math.random(10000),
   })
 
-/*  persons = persons.concat(person)*/
+  persons = persons.concat(person)
 
   person.save().then(savedPerson => {
     res.json(savedPerson)
