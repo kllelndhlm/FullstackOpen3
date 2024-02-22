@@ -26,11 +26,10 @@ app.use(
     ':method :url :status :res[content-length] - :response-time ms :postData'
   )
 );
-*/
+
 
 const dateTimeObject = new Date();
 
-/*
 let persons = [
     { 
     "name": "Arto Hellas", 
