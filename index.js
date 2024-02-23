@@ -14,7 +14,6 @@ const cors = require('cors')
 app.use(cors())
 
 app.use(express.json())
-console.log("Here!")
 
 /*
 morgan.token('postData', (req) => {
@@ -27,10 +26,11 @@ app.use(
     ':method :url :status :res[content-length] - :response-time ms :postData'
   )
 );
-
+*/
 
 const dateTimeObject = new Date();
 
+/*
 let persons = [
     { 
     "name": "Arto Hellas", 
@@ -67,23 +67,16 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const person = persons.find(person => person.id === id)
-
-  if (person) {
-    res.json(person)
-  } else {
-    res.status(404).end()
-  }
-})
-console.log("Here!2")
-
-  
-app.delete('/api/persons/:id', (req, res) => {
   Person.findById(req.params.id).then(person => {
-    console.log(req.params.id)
     res.json(person)
   })
+})
+  
+app.delete('/api/persons/:id', (req, res) => {
+  const id = Number(req.params.id)
+  console.log(dateTimeObject  , id)
+  persons = persons.filter(person => person.id !== id)
+  res.status(204).end()
 })
 
 app.get('/info', (req, res) => {
@@ -115,7 +108,8 @@ app.post('/api/persons', (req, res) => {
 
   const person = new Person ({
     name: body.name,
-    number: body.number
+    number: body.number,
+    id: body.id
   })
 
   persons = persons.concat(person)
