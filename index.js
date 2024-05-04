@@ -43,7 +43,7 @@ app.get('/api/persons', (req, res) => {
   })
 })
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
 
   const body = req.body
 
@@ -61,6 +61,7 @@ app.post('/api/persons', (req, res) => {
   person.save().then(savedPerson => {
     res.json(savedPerson)
   })
+  .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
